@@ -1,0 +1,50 @@
+	Method GetSector:Int()
+		Local bitfield:Int
+
+		If GetYDelta() < 0 then
+			bitfield :| 1
+		End If
+
+		If GetXDelta() < 0 then
+			bitfield :| 2
+			bitfield :~ 1
+		End If
+
+		Return bitfield
+	End Method
+	
+	Method IsOnNormal:Int(other:TPoint)
+		Local slopeBody:Float, cTerm:Float
+		Local dx:Float = GetXDelta()
+		Local dy:Float = GetYDelta()
+		Local sector:Int = GetSector()
+		Local output:Int
+		
+		If dx * dy Then
+			'both dx and dy are not zero
+			slopeBody = other.x/dx - other.y/dy
+			cTerm = pt1.x/dx - pt1.y/dy
+
+			If sector Mod 2 Then
+				output = slopeBody < cTerm
+			Else
+				output = slopeBody > cTerm
+			EndIf
+		Else
+			If dx Then
+				'dy is zero
+				output = other.y > pt1.y
+				If dx > 0 Then output = not output
+			Else
+				'dx is zero
+				output = other.x > pt1.x
+				If dy < 0 Then output = not output
+			End If
+		End If
+
+		If normal then
+			Return Not output
+		Else
+			Return output
+		End If
+	End Method

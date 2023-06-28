@@ -1,0 +1,16 @@
+# Executables
+*.exe
+
+# Output folder
+.bmx
+release
+
+# Output files
+*.o
+*.s
+
+# Compiled Dynamic libraries
+*.dll
+
+# Backup BB Files
+*.bak
